@@ -30,14 +30,16 @@ A chatbot worker is an instance that has multiple **Intent**.
 **Why does this instance exist?**  
 Since multiple web applications will invoke this API, its best that their back-end can create their own instance of the chatbot. -->
 ### **3 From Dashboard to API**
-### **Dashboard layout**
+## **3.1 Layout Design**
+### **3.1a Dashboard layout**
 ![Dashboard layout](./dashboard_layout.png)
-### **Create Intent layout**
+### **3.1b Create Intent layout**
 ![Create Intent](./dashboard_createIntent.png)
-### **Intent list layout**
+### **3.1c Intent list layout**
 ![Intent List](./dashboard_intentlist.png)
-### **Actions and parameters example**
+### **3.1d Actions and parameters example**
 ![Actions and params](./action_example.png)
+## **3.2 About Intents**
 **What is an Intent?**  
 An intent is a mechanics that the API uses to detect what to reply.  
 **What does an Intent have?**  
@@ -46,7 +48,14 @@ An intent is a mechanics that the API uses to detect what to reply.
 - ***Actions and paramters (optional)***: This is used to prompt users to input parameters 
 - ***Responses***: An array of messages of what to reply or of prompts  
 ### **3.2a Creating an Intent**
-From dashboard, we can initiate an instance of **Intent** for the API to save it on database.
+From dashboard, we can initiate an instance of **Intent** for the API to save it on database.  
+*Example:*
+```JSON
+    "IntentName": "Weather"
+    "IntentTrainingPhrases": ["Whats the weather like", "Is it raining", "How is it outside"]
+    "Actions and parameters": None
+    "Responses": "Its raining"
+```
 ### **3.2b Modifying an Intent**
 Allowing web owners to modify the intents on the database to their needs
 ### **3.2c Deleting an Intent**
