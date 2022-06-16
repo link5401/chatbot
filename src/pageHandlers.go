@@ -15,6 +15,7 @@ type Intent struct {
 	IntentName      string
 	TrainingPhrases []string
 	Reply           string
+	Prompt          []string
 }
 type InputMesssage struct {
 	UserID         string
@@ -55,20 +56,15 @@ func replyIntent(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	var flagF int = 0
 	for _, element := range listOfIntent {
 		for _, e := range element.TrainingPhrases {
 			if strings.Contains(strings.ToLower(messageReceived.MessageContent), strings.ToLower(e)) {
 				fmt.Fprintf(w, "%+v", element.Reply)
-				flagF = 1
-				break
+				return
 			}
 		}
-		if flagF == 1 {
-			break
-		}
 	}
-
+	fmt.Fprintf(w, "Sorry I don't understand what you are saying")
 }
 
 // func personCreate(w http.ResponseWriter, r *http.Request) {
