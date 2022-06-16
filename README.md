@@ -1,6 +1,6 @@
 # Chatbot API(GoLang)
 ## **1. Application Architecture**
-![Architecture](./architecture.png)
+![Architecture](img/architecture.png)
 ## **2. From Web App to API**
 ### **2.1 Inputs from Web App**
 A POST request that has the content of a JSON file describing the fields of inputs.  
@@ -23,7 +23,7 @@ Example:
 }
 ```
 ### **2.3.Dataflow**
-![Dataflow](./dataflow.png)
+![Dataflow](img/dataflow.png)
 <!-- ### **4.1 Instance of a chatbot worker**
 **What is a chatbot worker?**  
 A chatbot worker is an instance that has multiple **Intent**.  
@@ -31,14 +31,17 @@ A chatbot worker is an instance that has multiple **Intent**.
 Since multiple web applications will invoke this API, its best that their back-end can create their own instance of the chatbot. -->
 ### **3 From Dashboard to API**
 ## **3.1 Layout Design**
+**The orange rectangles** represents the sidebar buttons that the web owners can click.  
 ### **3.1a Dashboard layout**
-![Dashboard layout](./dashboard_layout.png)
+![Dashboard layout](img/dashboard_layout.png)
 ### **3.1b Create Intent layout**
-![Create Intent](./dashboard_createIntent.png)
+![Create Intent](img/dashboard_createIntent.png)
 ### **3.1c Intent list layout**
-![Intent List](./dashboard_intentlist.png)
+![Intent List](img/dashboard_intentlist.png)
 ### **3.1d Actions and parameters example**
-![Actions and params](./action_example.png)
+![Actions and params](img/action_example.png)
+### **3.1e Messages History Layout**
+![Messages](img/dashboard_messages.png)
 ## **3.2 About Intents**
 **What is an Intent?**  
 An intent is a mechanics that the API uses to detect what to reply.  

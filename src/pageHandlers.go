@@ -7,48 +7,53 @@ import (
 	"strings"
 )
 
-type Person struct {
-	Name string
-	Age  int
+type Prompt struct {
+	ParamName      string
+	ParamType      string
+	PromptQuestion string
 }
+
 type Intent struct {
 	IntentName      string
 	TrainingPhrases []string
 	Reply           string
-	Prompt          []string
+	Prompt          []Prompt
 }
 type InputMesssage struct {
 	UserID         string
 	MessageContent string
 }
 
+var NamePrompt = Prompt{
+	ParamName:      "name",
+	ParamType:      "string",
+	PromptQuestion: "What is your name",
+}
+var EmailPrompt = Prompt{
+	ParamName:      "email",
+	ParamType:      "email",
+	PromptQuestion: "What is your email",
+}
 var defaultHelloIntent = Intent{
 	IntentName:      "Hello",
 	TrainingPhrases: []string{"Hello help", "Hi"},
 	Reply:           "Hi, how can I help you",
 }
-var defaultHelpIntent = Intent{
-	IntentName:      "Help",
-	TrainingPhrases: []string{"Help", "I need help"},
-	Reply:           "Haha, no",
+var defaultRegisterIntent = Intent{
+	IntentName:      "Register",
+	TrainingPhrases: []string{"Register", "I need Registration"},
+	Reply:           "All good",
+	Prompt:          []Prompt{NamePrompt, EmailPrompt},
 }
 
-// func createIntent(w http.ResponseWriter, r *http.Request) {
-// 	err := json.NewDecoder(r.Body).Decode(&newIntent)
-
-// 	if err != nil {
-// 		http.Error(w, err.Error(), http.StatusBadRequest)
-// 		return
-// 	}
-// 	fmt.Fprintf(w, "Intent Created : %+v", newIntent)
-// }
 var listOfIntent = []Intent{
 	defaultHelloIntent,
-	defaultHelpIntent,
+	defaultRegisterIntent,
 }
+var promptingIntent Intent
+var promptingIndex int64
 
 func replyIntent(w http.ResponseWriter, r *http.Request) {
-
 	var messageReceived InputMesssage
 	err := json.NewDecoder(r.Body).Decode(&messageReceived)
 
@@ -59,30 +64,16 @@ func replyIntent(w http.ResponseWriter, r *http.Request) {
 	for _, element := range listOfIntent {
 		for _, e := range element.TrainingPhrases {
 			if strings.Contains(strings.ToLower(messageReceived.MessageContent), strings.ToLower(e)) {
-				fmt.Fprintf(w, "%+v", element.Reply)
-				return
+				if element.Prompt != nil {
+					promptingIntent = element
+					fmt.Fprintf(w, "%+v", element.Prompt[promptingIndex])
+					promptingIndex++
+				} else {
+					fmt.Fprintf(w, "%+v", element.Reply)
+					return
+				}
 			}
 		}
 	}
 	fmt.Fprintf(w, "Sorry I don't understand what you are saying")
 }
-
-// func personCreate(w http.ResponseWriter, r *http.Request) {
-// 	// Declare a new Person struct.
-// 	var p Person
-
-// 	// Try to decode the request body into the struct. If there is an error,
-// 	// respond to the client with the error message and a 400 status code.
-// 	err := json.NewDecoder(r.Body).Decode(&p)
-// 	if err != nil {
-// 		http.Error(w, err.Error(), http.StatusBadRequest)
-// 		return
-// 	}
-
-// 	// Do something with the Person struct...
-// 	fmt.Fprintf(w, "Person: %+v", p)
-// }
-
-// func home(w http.ResponseWriter, r *http.Request) {
-// 	w.Write([]byte("Hello"))
-// }
